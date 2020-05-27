@@ -7,3 +7,18 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#sidebar {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    width: 10%;
+    height: 100%;
+    position: fixed;
+    top: 50%;   
+    margin-top: -100px;
+}
+
+
+#home-background {
+    background-color: #54d4fc;
+}
+
