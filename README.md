@@ -7,3 +7,7 @@ This work is based on the [Google Software Product Sprint](https://g.co/software
 
 This repo contains Stephanie's portfolio and STEP projects.
 
+
+## WebApp
+
+### Week 2: Client Side Web Dev
