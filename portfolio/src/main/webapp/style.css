@@ -1,9 +1,47 @@
+
+
+body {
+    background-color: #ECAFAE;
+}
+
 #content {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
 }
 
-#greeting-container {
-  margin-top: 20px;
+#sidebar {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    width: 10%;
+    height: 100%;
+    position: fixed;
+    top: 50%;   
+    margin-top: -100px;
+}
+
+
+#scrollable-content {
+    float: right;
+    width: 90%;
+    overflow: auto;
+}
+
+#home {
+ 	position: relative;
+}
+
+#home-headphones {
+    width: 90%;
+    box-shadow: inset #E09291;   
+}
+
+#home-text {
+    font-family: "Arial Black", Gadget, sans-serif;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-60%, -50%);
+    font-size: 7vw;
+    color: 	#F8F8FF;
 }
