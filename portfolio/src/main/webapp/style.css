@@ -1,24 +1,23 @@
-
-
 body {
     background-color: #ECAFAE;
+    color: 	#F8F8FF;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 1vw;
 }
 
 #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 650px;
 }
 
 #sidebar {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
     width: 10%;
     height: 100%;
     position: fixed;
     top: 50%;   
     margin-top: -100px;
 }
-
 
 #scrollable-content {
     float: right;
@@ -43,5 +42,4 @@ body {
     left: 50%;
     transform: translate(-60%, -50%);
     font-size: 7vw;
-    color: 	#F8F8FF;
 }
