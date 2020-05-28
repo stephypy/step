@@ -1,7 +1,7 @@
 body {
     background-color: #ECAFAE;
     color: 	#F8F8FF;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: Verdana, Geneva, sans-serif;
     font-size: 1vw;
 }
 
@@ -42,4 +42,14 @@ body {
     left: 50%;
     transform: translate(-60%, -50%);
     font-size: 7vw;
+}
+
+.blog-title {
+    width: 50%;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 2vw;
+}
+
+.blog-text {
+    width: 90%;
 }
