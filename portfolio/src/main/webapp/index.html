@@ -8,7 +8,7 @@
     <script src="script.js"></script>
   </head>
 
-  <body>
+  <body onload="fadeIn('home')">
       <div id="sidebar">
           <ul class="no-bullets">
           	<li><button class="sidebar-button" onclick="scrollToDiv('home')">home</button></li>
@@ -20,7 +20,7 @@
       </div>
 
       <div id="scrollable-content">
-          <header id="home">
+          <header id="home" style="opacity:0">
               <img id="home-headphones" src="/Images/headphones.jpg">
               <title id="home-text">step steph</title>
           </header>

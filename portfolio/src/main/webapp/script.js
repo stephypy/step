@@ -25,13 +25,14 @@ function fadeIn(divName) {
     var elemDiv = document.getElementById(divName);
     var opacityVal = parseFloat(elemDiv.style.opacity);
     
-
-    // Set invisible the other post
-    if(divName == 'whycs') {
-        setInvisible('step');
-    }
-    else {
-        setInvisible('whycs');
+    if(divName != 'home') {
+        // Set invisible the other post
+        if(divName == 'whycs') {
+            setInvisible('step');
+        }
+        else {
+            setInvisible('whycs');
+        }
     }
 
     var timer = setInterval(function () { 
