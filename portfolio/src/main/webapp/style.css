@@ -19,6 +19,21 @@ body {
     margin-top: -100px;
 }
 
+ul.no-bullets {
+  list-style-type: none;
+  margin: 2%;
+  padding: 2%;
+}
+
+.sidebar-button {
+    background-color: #ECAFAE;
+    border: 3px solid #E09291;
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: 	#F8F8FF;
+    font-size: 1vw;
+    padding: 10px;
+}
+
 #scrollable-content {
     float: right;
     width: 90%;
