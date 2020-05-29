@@ -12,17 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+/* Scroll to the section selected */
+function scrollToDiv(divName) {
+    var elemDiv = document.getElementById(divName);
+    elemDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+/* Add fade in effect to reveal post */
+function fadeIn(divName) { 
+    scrollToDiv(divName);
+    var elemDiv = document.getElementById(divName);
+    var opacityVal = parseFloat(elemDiv.style.opacity);
+    
+
+    // Set invisible the other post
+    if(divName == 'whycs') {
+        setInvisible('step');
+    }
+    else {
+        setInvisible('whycs');
+    }
+
+    var timer = setInterval(function () { 
+        if(opacityVal >= 1.0)
+            clearInterval(timer);
+        opacityVal += 0.1;
+        elemDiv.style.opacity= opacityVal;
+    }, 100)
+
+}
+
+/* Makde post invisible */
+function setInvisible(divName) {
+    var elemDiv = document.getElementById(divName);
+    elemDiv.style.opacity = 0;    
 }
