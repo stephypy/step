@@ -25,13 +25,8 @@ ul.no-bullets {
   padding: 2%;
 }
 
-.sidebar-button {
-    background-color: #ECAFAE;
-    border: 3px solid #E09291;
-    font-family: "Arial Black", Gadget, sans-serif;
-    color: 	#F8F8FF;
-    font-size: 1vw;
-    padding: 10px;
+a:hover {
+    color:#E09291;
 }
 
 #scrollable-content {
