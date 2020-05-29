@@ -1,7 +1,12 @@
+@font-face {
+    font-family: BloggerSans;
+    src: url(/Fonts/BloggerSans.otf);
+}
+
 body {
     background-color: #ECAFAE;
     color: 	#F8F8FF;
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: BloggerSans;
     font-size: 1vw;
 }
 
@@ -35,18 +40,18 @@ body {
 }
 
 #home-text {
-    font-family: "Arial Black", Gadget, sans-serif;
+    font-weight: bolder;
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-60%, -50%);
+    transform: translate(-65%, -50%);
     font-size: 7vw;
 }
 
 .blog-title {
     width: 50%;
-    font-family: "Arial Black", Gadget, sans-serif;
+    font-weight: bold;
     font-size: 2vw;
 }
 
