@@ -46,7 +46,7 @@ a:hover {
 
 #home-text {
     font-family: "Arial Black", Gadget, sans-serif;
-    display: block;
+    display: inline-block;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -79,8 +79,7 @@ a:hover {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 0;
-    left: 0;
+    left: 5%;
     width: 90%;
     opacity: 0;
     transition: .5s ease;
