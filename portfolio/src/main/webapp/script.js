@@ -42,7 +42,7 @@ function fadeIn(divName) {
         if(opacityVal >= 1.0)
             clearInterval(timer);
         opacityVal += 0.1;
-        elemDiv.style.opacity= opacityVal;
+        elemDiv.style.opacity= Math.min(1, opacityVal);
     }, 100)
 
 }
