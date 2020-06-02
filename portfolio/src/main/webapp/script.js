@@ -23,6 +23,7 @@ function scrollToDiv(divName) {
 function fadeIn(divName) { 
     scrollToDiv(divName);
     var elemDiv = document.getElementById(divName);
+    elemDiv.style.visibility = "visible";
     var opacityVal = parseFloat(elemDiv.style.opacity);
     
     // Set invisible the other post
@@ -50,5 +51,6 @@ function fadeIn(divName) {
 /* Make post invisible */
 function setInvisible(divName) {
     var elemDiv = document.getElementById(divName);
-    elemDiv.style.opacity = 0;    
+    elemDiv.style.opacity = 0; 
+    elemDiv.style.visibility = "hidden";   
 }
