@@ -26,18 +26,15 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<String> dummyData;
+    private List<String> dummyData = new ArrayList<>();
 
     @Override
     public void init() {
-        dummyData = new ArrayList<>();
-
         dummyData.add("Cool cat");
         dummyData.add("hotdoghat");
         dummyData.add("It really be like that sometimes.");
 
     }
-    
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
