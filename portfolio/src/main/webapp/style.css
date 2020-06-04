@@ -6,8 +6,7 @@
 body {
     background-color: #ECAFAE;
     color: 	#F8F8FF;
-    font-family: BloggerSans;
-    font-size: 1vw;
+    font: 1vw BloggerSans;
 }
 
 #content {
@@ -46,7 +45,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-65%, -50%);
+    transform: translate(-50%, -50%);
     font-size: 7vw;
 }
 
