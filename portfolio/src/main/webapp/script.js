@@ -13,7 +13,7 @@
 // limitations under the License.
 
 window.addEventListener("load", addDummyDataToDom)
-function addDummyDataToDOM() {
+function addDummyDataToDom() {    
     fetch('/data').then(response => response.json()).then((dummyData) => {
         const commentsContent = document.getElementById('comments');
         dummyData.forEach(function(singleDummyData) {
