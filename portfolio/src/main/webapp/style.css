@@ -75,6 +75,18 @@ a:hover {
     width: 90%;
 }
 
+.comment-button {
+    position: absolute;
+    font-size: 3vw;
+    border: none;
+    text-align: center;
+    left: 45%;
+    border-radius: 5%;
+    background-color: #E09291;
+    padding: 2vw 7vw;
+    box-shadow: 5px 10px #C77978;
+}
+
 .container {
   position: relative;
 }
