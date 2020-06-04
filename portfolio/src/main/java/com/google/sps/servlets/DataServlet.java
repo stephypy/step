@@ -26,14 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<String> dummyData = new ArrayList<>();
-
-    @Override
-    public void init() {
-        dummyData.add("Cool cat");
-        dummyData.add("hotdoghat");
-        dummyData.add("It really be like that sometimes.");
-    }
+    private List<String> dummyData = Arrays.asList("Cool cat", "hotdoghat", "it really be like that sometimes.");
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -42,9 +35,7 @@ public class DataServlet extends HttpServlet {
         response.getWriter().println(json);
   }
 
-    private String toJsonString(List dummyData) {
-        Gson gson = new Gson();
-        String json = gson.toJson(dummyData);
-        return json;
-  }
+    private static String toJsonString(List data) {
+        return new Gson().toJson(data);
+    }
 }
