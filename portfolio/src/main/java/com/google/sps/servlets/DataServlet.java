@@ -33,18 +33,16 @@ public class DataServlet extends HttpServlet {
         dummyData.add("Cool cat");
         dummyData.add("hotdoghat");
         dummyData.add("It really be like that sometimes.");
-
     }
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = gSonMagic(dummyData);
+        String json = toJsonString(dummyData);
         response.setContentType("application/json;");
         response.getWriter().println(json);
-
   }
 
-    private String gSonMagic(List dummyData) {
+    private String toJsonString(List dummyData) {
         Gson gson = new Gson();
         String json = gson.toJson(dummyData);
         return json;
