@@ -23,6 +23,26 @@ body {
     margin-top: -100px;
 }
 
+#icons {
+    width: 10%;
+    position: fixed;
+}
+
+.icon-size {
+    max-width: 25%;
+    max-height: 25%;
+}
+
+ul.no-bullets {
+  list-style-type: none;
+  margin: 2%;
+  padding: 2%;
+}
+
+a:hover {
+    color:#E09291;
+}
+
 #scrollable-content {
     float: right;
     width: 80%;
@@ -47,6 +67,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 7vw;
+    
 }
 
 .blog-title {
@@ -90,4 +111,10 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+}
+
+#footer-citation {
+    width: 90%;
+    margin: 3vm;
+    background-color: #E09291;
 }
