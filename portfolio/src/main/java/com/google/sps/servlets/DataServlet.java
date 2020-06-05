@@ -25,11 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. 
-
-TO
-
-DO: modify this file to handle comments data */
+/** Servlet that returns some example content. **/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 <<<<<<< HEAD
