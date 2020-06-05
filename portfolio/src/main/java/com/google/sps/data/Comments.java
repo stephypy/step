@@ -31,9 +31,9 @@ public class Comments {
     // List of comments follow the format nickname then comment content
     private final List<String> commentList = new ArrayList<>();
 
-    private void addNewComment(String nickname, String commentContent) {
+    public void addNewComment(String nickname, String commentContent) {
         if(commentList.size() == commentLimit) {
-            removeOldestComment;
+            removeOldestComment();
         }
         
         commentList.add(nickname);

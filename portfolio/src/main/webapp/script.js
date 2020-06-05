@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+<<<<<<< HEAD
 /**
  * Adds a random greeting to the page.
  */
@@ -21,6 +22,17 @@ function addRandomGreeting() {
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+=======
+window.addEventListener("load", addCommentsToDom)
+function addCommentsToDom() {    
+    fetch('/data').then(response => response.json()).then((comments) => {
+        const commentsContent = document.getElementById('individual-comments');
+        comments.commentList.forEach(function(singleComment) {
+            commentsContent.appendChild(createListElement(singleComment));
+        });
+    });
+}
+>>>>>>> 46ec868... Added functionality to comment section
 
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
