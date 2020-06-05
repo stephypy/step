@@ -14,11 +14,8 @@
 
 package com.google.sps.servlets;
 
-<<<<<<< HEAD
-=======
 import com.google.gson.Gson;
 import com.google.sps.data.Comments;
->>>>>>> 46ec868... Added functionality to comment section
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,14 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. **/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-<<<<<<< HEAD
-
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
-  }
-=======
     private Comments commentsList = new Comments();
 
     @Override
@@ -68,5 +57,4 @@ public class DataServlet extends HttpServlet {
     private static String toJsonString(Comments data) {
         return new Gson().toJson(data);
     }
->>>>>>> 46ec868... Added functionality to comment section
 }

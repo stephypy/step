@@ -12,17 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-<<<<<<< HEAD
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-=======
 window.addEventListener("load", addCommentsToDom)
 function addCommentsToDom() {    
     fetch('/data').then(response => response.json()).then((comments) => {
@@ -32,9 +21,10 @@ function addCommentsToDom() {
         });
     });
 }
->>>>>>> 46ec868... Added functionality to comment section
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+function createListElement(text) {
+    const liElement = document.createElement('li');
+    var liContent = document.createTextNode(text);
+    liElement.appendChild(liContent);
+    return liElement;
 }
