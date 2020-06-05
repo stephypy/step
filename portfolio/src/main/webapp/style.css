@@ -1,8 +1,12 @@
+@font-face {
+    font-family: BloggerSans;
+    src: url(/Fonts/BloggerSans.otf);
+}
+
 body {
     background-color: #ECAFAE;
     color: 	#F8F8FF;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 1vw;
+    font: 1vw BloggerSans;
 }
 
 #content {
@@ -41,7 +45,8 @@ a:hover {
 
 #scrollable-content {
     float: right;
-    width: 90%;
+    width: 80%;
+    padding-right: 10%;
     overflow: auto;
 }
 
@@ -50,50 +55,48 @@ a:hover {
 }
 
 #home-headphones {
-    width: 90%;
+    width: 100%;
     box-shadow: inset #E09291;   
 }
 
 #home-text {
-    font-family: "Arial Black", Gadget, sans-serif;
-    display: inline-block;
+    font-weight: bolder;
+    display: block;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-60%, -50%);
+    transform: translate(-50%, -50%);
     font-size: 7vw;
     
 }
 
 .blog-title {
     width: 50%;
-    font-family: "Arial Black", Gadget, sans-serif;
+    font-weight: bold;
     font-size: 2vw;
 }
 
 .blog-text {
-    width: 90%;
+    width: 100%;
 }
 
 .container {
   position: relative;
+  width: 100%;
 }
 
 .overlay-img {
+    width: 100%;
+    height: auto;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 40px;
-
 }
 
 .overlay {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 5%;
-    width: 90%;
     opacity: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
     transition: .5s ease;
     background-color: #E09291;
 }
