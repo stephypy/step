@@ -15,10 +15,14 @@
 window.addEventListener("load", addCommentsToDom)
 function addCommentsToDom() {    
     fetch('/data').then(response => response.json()).then((comments) => {
-        const commentsContent = document.getElementById('individual-comments');
-        comments.commentList.forEach(function(singleComment) {
-            commentsContent.appendChild(createListElement(singleComment));
-        });
+        const commentsSection = document.getElementById('individual-comments');
+        if(comments.length > 0) {
+            comments.forEach((comment) => {
+                commentsSection.appendChild(createListElement(comment.nickname));
+                commentsSection.appendChild(createListElement(comment.commentContent));
+            });
+            
+        }
     });
 }
 

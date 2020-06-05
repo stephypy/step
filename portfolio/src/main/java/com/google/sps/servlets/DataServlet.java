@@ -15,10 +15,12 @@
 package com.google.sps.servlets;
 
 import com.google.gson.Gson;
-import com.google.sps.data.Comments;
+import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import java.util.List; 
+import java.util.ArrayList;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. **/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private Comments commentsList = new Comments();
+    private final int commentLimit = 5;
+    private List<Comment> commentsList = new ArrayList<>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -39,14 +42,17 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nicknameChoice = "Nickname:" + getNickname(request);
-        String commentContent = "Comment:" + getComment(request);
+        // Remove oldest comment
+        if(commentsList.size() == commentLimit) {
+            commentsList.remove(0);
+        }
+
+        Comment comment = getComment(request);
+        commentsList.add(comment);
 
         Entity taskEntity = new Entity("Task");
-        taskEntity.setProperty("nicknameChoice", nicknameChoice);
-        taskEntity.setProperty("commentContent", commentContent);
-
-        commentsList.addNewComment(nicknameChoice, commentContent);
+        taskEntity.setProperty("nickname", comment.getNickname());
+        taskEntity.setProperty("commentContent", comment.getCommentContent());
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(taskEntity);
@@ -55,16 +61,13 @@ public class DataServlet extends HttpServlet {
         response.sendRedirect("/index.html");
     }
 
-    // TODO: @stephypy Handle empty text fields
-    private String getNickname(HttpServletRequest request) {
-        return request.getParameter("nickname");
+    private Comment getComment(HttpServletRequest request) {
+        String nickname = request.getParameter("nickname");
+        String commentContent = request.getParameter("comment");
+        return new Comment(nickname, commentContent);
     }
 
-    private String getComment(HttpServletRequest request) {
-        return request.getParameter("comment");
-    }
-
-    private static String toJsonString(Comments data) {
+    private static String toJsonString(List<Comment> data) {
         return new Gson().toJson(data);
     }
 }
