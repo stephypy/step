@@ -19,6 +19,9 @@ import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.List; 
 import java.util.ArrayList;
 import java.io.IOException;
@@ -30,11 +33,23 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. **/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private final int commentLimit = 5;
     private List<Comment> commentsList = new ArrayList<>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+        
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);
+       
+        for (Entity entity : results.asIterable()) {
+            String nickname = (String) entity.getProperty("nickname");
+            String commentContent = (String) entity.getProperty("commentContent");
+
+            Comment comment = new Comment(nickname, commentContent);
+            commentsList.add(comment);
+        }
+
         String json = toJsonString(commentsList);
         response.setContentType("application/json;");
         response.getWriter().println(json);
@@ -42,15 +57,10 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Remove oldest comment
-        if(commentsList.size() == commentLimit) {
-            commentsList.remove(0);
-        }
-
         Comment comment = getComment(request);
         commentsList.add(comment);
 
-        Entity taskEntity = new Entity("Task");
+        Entity taskEntity = new Entity("Comment");
         taskEntity.setProperty("nickname", comment.getNickname());
         taskEntity.setProperty("commentContent", comment.getCommentContent());
 
