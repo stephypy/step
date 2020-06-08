@@ -76,15 +76,22 @@ a:hover {
 }
 
 .comment-button {
-    position: absolute;
-    font-size: 3vw;
-    border: none;
+    display: block;
+    margin: 0 auto;
+    padding:0.5em 3em;
+    font-size: 1vw;
+    color: #F8F8FF;
+    background-color: #ECAFAE;
+    border: 0.2em solid #F8F8FF;
+    border-radius:0.25em;
+    box-sizing: border-box;
+    text-decoration:none;
     text-align: center;
-    left: 45%;
-    border-radius: 5%;
-    background-color: #E09291;
-    padding: 2vw 7vw;
-    box-shadow: 5px 10px #C77978;
+}
+
+.comment-button:hover{
+    color: #E09291;
+    background-color: #F8F8FF;
 }
 
 .modal {
