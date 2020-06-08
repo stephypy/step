@@ -19,6 +19,10 @@ function scrollToDiv(divName) {
     elemDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+function openComments() {
+    document.getElementById("whycs-modal").style.display = "block"; 
+}
+
 /* Add fade in effect to reveal post */
 function fadeIn(divName) { 
     scrollToDiv(divName);
