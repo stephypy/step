@@ -6,12 +6,14 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getRandomGreeting()">
     <div id="content">
-      <h1>Random Quotes</h1>
-      <p>Click here to see a random quote:</p>
-      <button onclick="getRandomQuote()">Fetch a quote!</button>
-      <div id="quote-container"></div>
+        <h1 id="welcome-header"></h1>
+        <h2>Random Quotes</h2>
+        <p>Click here to see a random quote:</p>
+        <button onclick="getRandomQuote()">Fetch a quote!</button>
+        <div id="quote-container"></div>
+        <h3>thanks.</h3>
     </div>
   </body>
 </html>

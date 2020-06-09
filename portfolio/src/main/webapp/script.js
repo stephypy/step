@@ -12,6 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+window.addEventListener("load", addDummyDataToDom)
+function addDummyDataToDom() {    
+    fetch('/data').then(response => response.json()).then((dummyData) => {
+        const commentsContent = document.getElementById('comments');
+        dummyData.forEach(function(singleDummyData) {
+            commentsContent.appendChild(createListElement(singleDummyData));
+        });
+    });
+}
+
+function createListElement(text) {
+    const liElement = document.createElement('li');
+    var liContent = document.createTextNode(text);
+    liElement.appendChild(liContent);
+    return liElement;
 
 /* Scroll to the section selected */
 function scrollToDiv(divName) {
