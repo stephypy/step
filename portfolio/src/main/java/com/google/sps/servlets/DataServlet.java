@@ -14,70 +14,70 @@
 
 package com.google.sps.servlets;
 
-import com.google.gson.Gson;
-import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import java.util.List; 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. **/
+/** Servlet that returns some example content. * */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<Comment> commentsList = new ArrayList<>();
+  private List<Comment> commentsList = new ArrayList<>();
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-        
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(query);
-       
-        for (Entity entity : results.asIterable()) {
-            String nickname = (String) entity.getProperty("nickname");
-            String commentContent = (String) entity.getProperty("commentContent");
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
-            Comment comment = new Comment(nickname, commentContent);
-            commentsList.add(comment);
-        }
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
 
-        String json = toJsonString(commentsList);
-        response.setContentType("application/json;");
-        response.getWriter().println(json);
+    for (Entity entity : results.asIterable()) {
+      String nickname = (String) entity.getProperty("nickname");
+      String commentContent = (String) entity.getProperty("commentContent");
+
+      Comment comment = new Comment(nickname, commentContent);
+      commentsList.add(comment);
     }
 
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Comment comment = getComment(request);
-        commentsList.add(comment);
+    String json = toJsonString(commentsList);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
 
-        Entity taskEntity = new Entity("Comment");
-        taskEntity.setProperty("nickname", comment.getNickname());
-        taskEntity.setProperty("commentContent", comment.getCommentContent());
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Comment comment = getComment(request);
+    commentsList.add(comment);
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(taskEntity);
+    Entity taskEntity = new Entity("Comment");
+    taskEntity.setProperty("nickname", comment.getNickname());
+    taskEntity.setProperty("commentContent", comment.getCommentContent());
 
-        // Redirect back to the HTML page.
-        response.sendRedirect("/index.html");
-    }
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
 
-    private Comment getComment(HttpServletRequest request) {
-        String nickname = request.getParameter("nickname");
-        String commentContent = request.getParameter("comment");
-        return new Comment(nickname, commentContent);
-    }
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
 
-    private static String toJsonString(List<Comment> data) {
-        return new Gson().toJson(data);
-    }
+  private Comment getComment(HttpServletRequest request) {
+    String nickname = request.getParameter("nickname");
+    String commentContent = request.getParameter("comment");
+    return new Comment(nickname, commentContent);
+  }
+
+  private static String toJsonString(List<Comment> data) {
+    return new Gson().toJson(data);
+  }
 }
