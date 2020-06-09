@@ -16,13 +16,13 @@
  * Fetches a random quote from the server and adds it to the DOM.
  */
 function getRandomQuote() {
-  console.log('Fetching a random quote.');
+    console.log('Fetching a random quote.');
 
-  // The fetch() function returns a Promise because the request is asynchronous.
-  const responsePromise = fetch('/random-quote');
+    // The fetch() function returns a Promise because the request is asynchronous.
+    const responsePromise = fetch('/random-quote');
 
-  // When the request is complete, pass the response into handleResponse().
-  responsePromise.then(handleResponse);
+    // When the request is complete, pass the response into handleResponse().
+    responsePromise.then(handleResponse);
 }
 
 /**
@@ -30,23 +30,23 @@ function getRandomQuote() {
  * addQuoteToDom().
  */
 function handleResponse(response) {
-  console.log('Handling the response.');
+    console.log('Handling the response.');
 
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
-  const textPromise = response.text();
+    // response.text() returns a Promise, because the response is a stream of
+    // content and not a simple variable.
+    const textPromise = response.text();
 
-  // When the response is converted to text, pass the result into the
-  // addQuoteToDom() function.
-  textPromise.then(addQuoteToDom);
+    // When the response is converted to text, pass the result into the
+    // addQuoteToDom() function.
+    textPromise.then(addQuoteToDom);
 }
 
 /** Adds a random quote to the DOM. */
 function addQuoteToDom(quote) {
-  console.log('Adding quote to dom: ' + quote);
+    console.log('Adding quote to dom: ' + quote);
 
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
+    const quoteContainer = document.getElementById('quote-container');
+    quoteContainer.innerText = quote;
 }
 
 /**
@@ -56,9 +56,9 @@ function addQuoteToDom(quote) {
  * whichever syntax makes the most sense to you.
  */
 function getRandomQuoteUsingArrowFunctions() {
-  fetch('/random-quote').then(response => response.text()).then((quote) => {
-    document.getElementById('quote-container').innerText = quote;
-  });
+    fetch('/random-quote').then(response => response.text()).then((quote) => {
+        document.getElementById('quote-container').innerText = quote;
+    });
 }
 
 /**
@@ -67,7 +67,24 @@ function getRandomQuoteUsingArrowFunctions() {
  * Promises.
  */
 async function getRandomQuoteUsingAsyncAwait() {
-  const response = await fetch('/random-quote');
-  const quote = await response.text();
-  document.getElementById('quote-container').innerText = quote;
+    const response = await fetch('/random-quote');
+    const quote = await response.text();
+    document.getElementById('quote-container').innerText = quote;
+}
+
+function getRandomGreeting() {
+    const responsePromise = fetch('/random-greeting');
+    responsePromise.then(handleRandomGreetingResponse)
+}
+
+function handleRandomGreetingResponse(response) {
+    const textPromise = response.text();
+
+  // When the response is converted to text, pass the result into the
+  // addQuoteToDom() function.
+  textPromise.then(addGreetingToDom);
+}
+
+async function addGreetingToDom(greeting) {
+    document.getElementById('welcome-header').innerText = greeting;
 }
