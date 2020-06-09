@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-window.addEventListener("load", addDummyDataToDom)
-function addDummyDataToDom() {    
-    fetch('/data').then(response => response.json()).then((dummyData) => {
-        const commentsContent = document.getElementById('comments');
-        dummyData.forEach(function(singleDummyData) {
-            commentsContent.appendChild(createListElement(singleDummyData));
-        });
+window.addEventListener("load", addCommentsToDom)
+function addCommentsToDom() {    
+    fetch('/data').then(response => response.json()).then((comments) => {
+        const commentsSection = document.getElementById('individual-comments');
+        if(comments.length > 0) {
+            comments.forEach((comment) => {
+                commentsSection.appendChild(createListElement(comment.nickname));
+                commentsSection.appendChild(createListElement(comment.commentContent));
+            });    
+        }
     });
 }
 
@@ -27,6 +30,7 @@ function createListElement(text) {
     var liContent = document.createTextNode(text);
     liElement.appendChild(liContent);
     return liElement;
+}
 
 /* Scroll to the section selected */
 function scrollToDiv(divName) {
@@ -60,7 +64,6 @@ function fadeIn(divName) {
         opacityVal += 0.1;
         elemDiv.style.opacity= Math.min(1, opacityVal);
     }, 100)
-
 }
 
 /* Make post invisible */
