@@ -21,7 +21,9 @@ function addCommentsToDom() {
       if (comments.length > 0) {
         comments.forEach((comment) => {
           commentsSection.appendChild(createListElement(comment.nickname));
-          commentsSection.appendChild(createListElement(comment.commentContent));
+          commentsSection.appendChild(
+            createListElement(comment.commentContent)
+          );
         });
       }
     });
