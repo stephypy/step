@@ -11,6 +11,7 @@
 	"require-jsdoc": "off",
 	"valid-jsdoc": "off",
 	"object-curly-spacing": "off",
+	"max-len": "off",
 	"indent": "off"  
   }
 }
