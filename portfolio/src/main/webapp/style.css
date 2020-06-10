@@ -1,32 +1,36 @@
+@font-face {
+  font-family: BloggerSans;
+  src: url(/Fonts/BloggerSans.otf);
+}
+
 body {
-    background-color: #ECAFAE;
-    color: 	#F8F8FF;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 1vw;
+  background-color: #ecafae;
+  color: #f8f8ff;
+  font: 1vw BloggerSans;
 }
 
 #content {
-    margin-left: auto;
-    margin-right: auto;
-    width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
 }
 
 #sidebar {
-    width: 10%;
-    height: 100%;
-    position: fixed;
-    top: 50%;   
-    margin-top: -100px;
+  width: 10%;
+  height: 100%;
+  position: fixed;
+  top: 50%;
+  margin-top: -100px;
 }
 
 #icons {
-    width: 10%;
-    position: fixed;
+  width: 10%;
+  position: fixed;
 }
 
 .icon-size {
-    max-width: 25%;
-    max-height: 25%;
+  max-width: 25%;
+  max-height: 25%;
 }
 
 ul.no-bullets {
@@ -36,43 +40,43 @@ ul.no-bullets {
 }
 
 a:hover {
-    color:#E09291;
+  color: #e09291;
 }
 
 #scrollable-content {
-    float: right;
-    width: 90%;
-    overflow: auto;
+  float: right;
+  width: 80%;
+  padding-right: 10%;
+  overflow: auto;
 }
 
 #home {
- 	position: relative;
+  position: relative;
 }
 
 #home-headphones {
-    width: 90%;
-    box-shadow: inset #E09291;   
+  width: 100%;
+  box-shadow: inset #e09291;
 }
 
 #home-text {
-    font-family: "Arial Black", Gadget, sans-serif;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-60%, -50%);
-    font-size: 7vw;
-    
+  font-weight: bolder;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7vw;
 }
 
 .blog-title {
-    width: 50%;
-    font-family: "Arial Black", Gadget, sans-serif;
-    font-size: 2vw;
+  width: 50%;
+  font-weight: bold;
+  font-size: 2vw;
 }
 
 .blog-text {
-    width: 90%;
+  width: 100%;
 }
 
 .comment-button {
@@ -138,28 +142,27 @@ a:hover {
 
 .container {
   position: relative;
+  width: 100%;
 }
 
 .overlay-img {
-    display: block;
-    margin: 0 auto;
-    padding: 40px;
-
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 5%;
-    width: 90%;
-    opacity: 0;
-    transition: .5s ease;
-    background-color: #E09291;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.5s ease;
+  background-color: #e09291;
 }
 
-.container:hover .overlay{
-    opacity: 1;
+.container:hover .overlay {
+  opacity: 1;
 }
 
 .center {
@@ -172,7 +175,7 @@ a:hover {
 }
 
 #footer-citation {
-    width: 90%;
-    margin: 3vm;
-    background-color: #E09291;
+  width: 90%;
+  margin: 3vm;
+  background-color: #e09291;
 }
