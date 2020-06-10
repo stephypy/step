@@ -18,14 +18,31 @@ function addCommentsToDom() {
         const commentsSection = document.getElementById('individual-comments');
         if(comments.length > 0) {
             comments.forEach((comment) => {
-                commentsSection.appendChild(createListElement(comment.nickname));
-                commentsSection.appendChild(createListElement(comment.commentContent));
+                commentsSection.appendChild(createListElement(comment.nickname + ":"));
+                commentsSection.appendChild(createListElement(comment.commentContent + " ", comment.sentimentScore));
             });    
         }
     });
 }
 
-function createListElement(text) {
+function createListElement(text, score = 2) {
+    // Thumbs up emoji
+    const positiveEmoji = "&#128077";
+    // Grimacing emoji
+    const negativeEmoji = "&#128556";
+    // Bubble speech emoji
+    const neutralEmoji = "&#128172";
+
+    if(score <= -0.6) {
+      text += negativeEmoji;
+    }
+    else if(score >= 0.6) {
+      text += positiveEmoji;
+    }
+    else {
+      text += neutralEmoji;
+    }
+    
     const liElement = document.createElement('li');
     var liContent = document.createTextNode(text);
     liElement.appendChild(liContent);

@@ -20,10 +20,17 @@ package com.google.sps.data;
 public class Comment {
     private String nickname;
     private String commentContent;
+    private double sentimentScore;
 
-    public Comment(String nickname, String commentContent) {
+     public Comment(String nickname, String commentContent) {
         this.nickname = nickname;
         this.commentContent = commentContent;
+    }
+
+    public Comment(String nickname, String commentContent, double sentimentScore) {
+        this.nickname = nickname;
+        this.commentContent = commentContent;
+        this.sentimentScore = sentimentScore;
     }
 
     public String getNickname() {
@@ -32,5 +39,13 @@ public class Comment {
 
     public String getCommentContent() {
         return this.commentContent;
+    }
+
+    public double getSentimentScore() {
+        return this.sentimentScore;
+    }
+
+    public void setSentimentScore(double sentimentScore) {
+        this.sentimentScore = sentimentScore;
     }
 }

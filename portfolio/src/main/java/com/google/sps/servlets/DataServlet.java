@@ -14,6 +14,10 @@
 
 package com.google.sps.servlets;
 
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
+
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -45,8 +49,9 @@ public class DataServlet extends HttpServlet {
         for (Entity entity : results.asIterable()) {
             String nickname = (String) entity.getProperty("nickname");
             String commentContent = (String) entity.getProperty("commentContent");
+            double sentimentScore = (double) entity.getProperty("sentimentScore");
 
-            Comment comment = new Comment(nickname, commentContent);
+            Comment comment = new Comment(nickname, commentContent, sentimentScore);
             commentsList.add(comment);
         }
 
@@ -58,14 +63,23 @@ public class DataServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment comment = getComment(request);
+
+        Document doc = Document.newBuilder().setContent(comment.getCommentContent()).setType(Document.Type.PLAIN_TEXT).build();
+        LanguageServiceClient languageService = LanguageServiceClient.create();
+        Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+        double score = sentiment.getScore();
+        languageService.close();
+
+        comment.setSentimentScore(score);
         commentsList.add(comment);
 
-        Entity taskEntity = new Entity("Comment");
-        taskEntity.setProperty("nickname", comment.getNickname());
-        taskEntity.setProperty("commentContent", comment.getCommentContent());
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("nickname", comment.getNickname());
+        commentEntity.setProperty("commentContent", comment.getCommentContent());
+        commentEntity.setProperty("sentimentScore", comment.getSentimentScore());
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(taskEntity);
+        datastore.put(commentEntity);
 
         // Redirect back to the HTML page.
         response.sendRedirect("/index.html");
