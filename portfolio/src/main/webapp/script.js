@@ -42,6 +42,18 @@ function scrollToDiv(divName) {
   elemDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+/* Open the modal box with comments */
+function openComments() {
+    document.getElementById("whycs-modal").style.display = "block"; 
+}
+
+/* Close modal when the X symbol is clicked or when user clicks outside the modal content */
+window.onclick = function(evt) {
+    if(evt.target == document.getElementById("whycs-modal") || evt.target == document.getElementById("whycs-close")) {
+        document.getElementById("whycs-modal").style.display = "none";
+     }
+}
+
 /* Add fade in effect to reveal post */
 window.addEventListener('load', fadeIn);
 function fadeIn(divName) {
