@@ -6,10 +6,11 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "google"],
-  "rules": {
-    "require-jsdoc": "off",
-    "valid-jsdoc": "off",
-    "object-curly-spacing": "off"
+    "extends": ["eslint:recommended", "google"],
+    "rules": {
+	"require-jsdoc": "off",
+	"valid-jsdoc": "off",
+	"object-curly-spacing": "off",
+	"indent": "off"  
   }
 }
