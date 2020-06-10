@@ -14,15 +14,17 @@
 
 window.addEventListener('load', addCommentsToDom);
 function addCommentsToDom() {
-  fetch('/data').then((response) => response.json()).then((comments) => {
-    const commentsSection = document.getElementById('individual-comments');
-    if (comments.length > 0) {
-      comments.forEach((comment) => {
-        commentsSection.appendChild(createListElement(comment.nickname));
-        commentsSection.appendChild(createListElement(comment.commentContent));
-      });
-    }
-  });
+  fetch('/data')
+    .then((response) => response.json())
+    .then((comments) => {
+      const commentsSection = document.getElementById('individual-comments');
+      if (comments.length > 0) {
+        comments.forEach((comment) => {
+          commentsSection.appendChild(createListElement(comment.nickname));
+          commentsSection.appendChild(createListElement(comment.commentContent));
+        });
+      }
+    });
 }
 
 function createListElement(text) {

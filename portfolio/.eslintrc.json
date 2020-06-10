@@ -12,6 +12,7 @@
 	"valid-jsdoc": "off",
 	"object-curly-spacing": "off",
 	"max-len": "off",
+	"comma-dangle": "off",
 	"indent": "off"  
   }
 }
