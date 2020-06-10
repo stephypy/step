@@ -3,5 +3,8 @@
     "eslint-config-google": "^0.14.0",
     "eslint": "^7.2.0",
     "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "eslint-config-prettier": "^6.11.0"
   }
 }
