@@ -15,6 +15,8 @@
 function pageLoad() {
   fadeIn('home');
   addCommentsToDom();
+  const openCommentsButton = document.getElementById('open-comments');
+  openCommentsButton.addEventListener('click', openComments);
 }
 window.onload = pageLoad;
 
@@ -45,9 +47,6 @@ function createListElement(text, className) {
 }
 
 /* Open the modal box with comments */
-document
-  .getElementById('open-comments')
-  .addEventListener('click', openComments);
 function openComments() {
   document.getElementById('whycs-modal').style.display = 'block';
 }
