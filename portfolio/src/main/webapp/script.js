@@ -25,24 +25,43 @@ function addCommentsToDom() {
     .then((response) => response.json())
     .then((comments) => {
       const commentsSection = document.getElementById('whycs-comments');
-      if (comments.length > 0) {
+      if (comments.error == null) {
         comments.forEach((comment) => {
           commentsSection.appendChild(
             createListElement(comment.nickname, 'nickname')
           );
           commentsSection.appendChild(
-            createListElement(comment.commentContent, 'comments')
+            createListElement(comment.commentContent, 'comments', comment.sentimentScore)
           );
         });
       }
     });
 }
 
-function createListElement(text, className) {
+function createListElement(text, className, sentimentScore) {
   const liElement = document.createElement('li');
   const liContent = document.createTextNode(text);
   liElement.className = className;
   liElement.appendChild(liContent);
+
+  if(className == 'comments') {
+    const positiveEmoji = ' &#128516';
+    const neutralEmoji = '&#128172';
+    const negativeEmoji = '&#128556';
+
+    const labelElement = document.createElement('label');
+    if(sentimentScore <= -0.6) {
+      labelElement.innerHTML = negativeEmoji;
+    }
+    else if(sentimentScore >= 0.6) {
+      labelElement.innerHTML = positiveEmoji;
+    }
+    else {
+      labelElement.innerHTML = neutralEmoji;
+    }
+    liElement.appendChild(labelElement);
+  }
+
   return liElement;
 }
 
