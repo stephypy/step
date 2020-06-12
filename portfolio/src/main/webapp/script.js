@@ -97,3 +97,7 @@ function setInvisible(divName) {
   elemDiv.style.opacity = 0;
   elemDiv.style.visibility = 'hidden';
 }
+
+function goToCharts() {
+  window.location.href = "/charts.html";
+}
