@@ -12,29 +12,54 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-window.addEventListener('load', addCommentsToDom);
+function pageLoad() {
+  fadeIn('home');
+  addCommentsToDom();
+  const openCommentsButton = document.getElementById('open-comments');
+  openCommentsButton.addEventListener('click', openComments);
+}
+window.onload = pageLoad;
+
 function addCommentsToDom() {
   fetch('/data')
     .then((response) => response.json())
     .then((comments) => {
-      const commentsSection = document.getElementById('individual-comments');
+      const commentsSection = document.getElementById('whycs-comments');
       if (comments.length > 0) {
         comments.forEach((comment) => {
-          commentsSection.appendChild(createListElement(comment.nickname));
           commentsSection.appendChild(
-            createListElement(comment.commentContent)
+            createListElement(comment.nickname, 'nickname')
+          );
+          commentsSection.appendChild(
+            createListElement(comment.commentContent, 'comments')
           );
         });
       }
     });
 }
 
-function createListElement(text) {
+function createListElement(text, className) {
   const liElement = document.createElement('li');
   const liContent = document.createTextNode(text);
+  liElement.className = className;
   liElement.appendChild(liContent);
   return liElement;
 }
+
+/* Open the modal box with comments */
+function openComments() {
+  document.getElementById('whycs-modal').style.display = 'block';
+}
+
+/* Close modal when the X symbol is clicked or when user clicks outside the modal content */
+window.onclick = function (evt) {
+  if (
+    evt.target == document.getElementById('whycs-modal') ||
+    evt.target == document.getElementById('whycs-close')
+  ) {
+    document.getElementById('whycs-modal').style.display = 'none';
+  }
+};
 
 /* Scroll to the section selected */
 function scrollToDiv(divName) {
@@ -42,20 +67,7 @@ function scrollToDiv(divName) {
   elemDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-/* Open the modal box with comments */
-function openComments() {
-    document.getElementById("whycs-modal").style.display = "block"; 
-}
-
-/* Close modal when the X symbol is clicked or when user clicks outside the modal content */
-window.onclick = function(evt) {
-    if(evt.target == document.getElementById("whycs-modal") || evt.target == document.getElementById("whycs-close")) {
-        document.getElementById("whycs-modal").style.display = "none";
-     }
-}
-
 /* Add fade in effect to reveal post */
-window.addEventListener('load', fadeIn);
 function fadeIn(divName) {
   scrollToDiv(divName);
   const elemDiv = document.getElementById(divName);
@@ -72,7 +84,7 @@ function fadeIn(divName) {
     setInvisible('whycs');
   }
 
-  const timer = setInterval(function() {
+  const timer = setInterval(function () {
     if (opacityVal >= 1.0) clearInterval(timer);
     opacityVal += 0.1;
     elemDiv.style.opacity = Math.min(1, opacityVal);

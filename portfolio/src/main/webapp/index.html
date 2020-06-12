@@ -8,7 +8,7 @@
     <script src="script.js"></script>
   </head>
 
-  <body onload="fadeIn('home')">
+  <body>
     <div id="icons">
       <ul class="no-bullets">
         <li>
@@ -34,18 +34,18 @@
       </ul>
     </div>
 
-	<div id="scrollable-content">
-		<header id="home" style="opacity:0">
-			<img id="home-headphones" src="/Images/headphones.jpg">
-			<title id="home-text">step steph</title>
-		</header>
+    <div id="scrollable-content">
+      <header id="home" style="opacity: 0;">
+        <img id="home-headphones" src="/Images/headphones.jpg" />
+        <title id="home-text">step steph</title>
+      </header>
 
-		<br>
+      <br />
 
-		<section id="whycs" style="opacity:0">
-			<p class="blog-title">WHY CS</p>
+      <section id="whycs" style="opacity: 0;">
+        <p class="blog-title">WHY CS</p>
 
-			<div class="blog-text">
+        <div class="blog-text">
           <p>
             It all started with a book. I was a freshman in high school watching
             a ceremony celebrating seniors and their accomplishments. I was
@@ -117,63 +117,93 @@
             over the years, but I can say computer science is everywhere and
             more importantly, I have fun being part of it.
           </p>
-			</div>
+        </div>
 
-			<button class="comment-button" onclick="openComments()">comments</button>
+        <button id="open-comments" class="comment-button">comments</button>
 
-			<div id="whycs-modal" class="modal">
-				<div class="center">
-					<div class="modal-header">
-						<span id="whycs-close" class="whycs-close">&times;</span>
-						<h2>comments.</h2>
-					</div>
-					<div class="modal-body">
-						<ul id="whycs-comments" class="no-bullets">
-							<li>Comments will go here</li>
-						</ul>
-					</div>
-					<div class="modal-footer">
-						<p>Option to submit comment will go here as a form</p>
-					</div>
-				</div>
-			</div>
+        <div id="whycs-modal" class="modal">
+          <div class="center">
+            <div class="modal-header">
+              <span id="whycs-close" class="whycs-close">&times;</span>
+              <h2>comments.</h2>
+            </div>
 
-		</section>
+            <div class="modal-body">
+              <ul id="whycs-comments" class="no-bullets"></ul>
+            </div>
 
-		<br>
+            <div class="modal-footer">
+              <div id="post-comment">
+                <form action="/data" method="POST">
+                  <label for="nickname">nickname:</label>
+                  <input
+                    type="text"
+                    name="nickname"
+                    maxlength="20"
+                    placeholder="your nickname"
+                  />
+                  <br />
+                  <label for="comment">comment:</label>
+                  <input
+                    type="text"
+                    name="comment"
+                    maxlength="280"
+                    placeholder="write a comment"
+                  />
+                  <br />
+                  <input type="submit" value="post" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-		<section id="step" style="opacity:0">
-			<p class="blog-title">(ST)EP</p>
-			<div class="container">
-				<img src="Images/android.jpg" class="overlay-img">
-				<div class="overlay">
-					<div class="center">
-						<p><b>Summer 2019 (May 2019 - August 2019)</b></p>
-						<p><b>Engineering Practicum Intern | Google</b></p>
-						<ul>
-							<li>Frontend development using <b>Typescript</b> with <b>Angular framework</b></li>
-							<li>Worked on an internal web application that facilitates the viewing and comparison of
-								test results</li>
-							<li>Implemented diffing of test logs with fellow EP partner</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
+      <br />
 
-		<br>
+      <section id="step" style="opacity: 0;">
+        <p class="blog-title">(ST)EP</p>
+        <div class="container">
+          <img src="Images/android.jpg" class="overlay-img" />
+          <div class="overlay">
+            <div class="center">
+              <p><b>Summer 2019 (May 2019 - August 2019)</b></p>
+              <p><b>Engineering Practicum Intern | Google</b></p>
+              <ul>
+                <li>
+                  Frontend development using <b>Typescript</b> with
+                  <b>Angular framework</b>
+                </li>
+                <li>
+                  Worked on an internal web application that facilitates the
+                  viewing and comparison of test results
+                </li>
+                <li>Implemented diffing of test logs with fellow EP partner</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
-		<footer id="footer-citation">
-			<ul class="no-bullets">
-				<li>Headphones Photo by Moose Photos from Pexels</li>
-				<li>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a
-						href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></li>
-			</ul>
-		</footer>
+      <br />
 
-		<br>
+      <footer id="footer-citation">
+        <ul class="no-bullets">
+          <li>Headphones Photo by Moose Photos from Pexels</li>
+          <li>
+            Icons made by
+            <a href="https://www.flaticon.com/authors/freepik" title="Freepik"
+              >Freepik</a
+            >
+            from
+            <a href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com</a
+            >
+          </li>
+        </ul>
+      </footer>
 
-      </div>
-</body>
-
+      <br />
+    </div>
+  </body>
 </html>

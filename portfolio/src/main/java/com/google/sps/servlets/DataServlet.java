@@ -34,12 +34,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private List<Comment> commentsList = new ArrayList<>();
+  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
@@ -47,7 +46,6 @@ public class DataServlet extends HttpServlet {
       String commentContent = (String) entity.getProperty("commentContent");
 
       Comment comment = new Comment(nickname, commentContent);
-      commentsList.add(comment);
     }
 
     String json = toJsonString(commentsList);
@@ -58,14 +56,13 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Comment comment = getComment(request);
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("nickname", comment.getNickname());
+    commentEntity.setProperty("commentContent", comment.getCommentContent());
+
+    datastore.put(commentEntity);
     commentsList.add(comment);
-
-    Entity taskEntity = new Entity("Comment");
-    taskEntity.setProperty("nickname", comment.getNickname());
-    taskEntity.setProperty("commentContent", comment.getCommentContent());
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
