@@ -46,8 +46,8 @@ function createListElement(text, className, sentimentScore) {
 
   if(className == 'comments') {
     const positiveEmoji = ' &#128516';
-    const neutralEmoji = '&#128172';
-    const negativeEmoji = '&#128556';
+    const neutralEmoji = ' &#128172';
+    const negativeEmoji = ' &#128556';
 
     const labelElement = document.createElement('label');
     if(sentimentScore <= -0.6) {

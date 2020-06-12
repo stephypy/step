@@ -19,16 +19,19 @@ public class Comment {
   private String nickname;
   private String commentContent;
   private double sentimentScore;
+  private long timestamp;
 
-  public Comment(String nickname, String commentContent) {
+  public Comment(String nickname, String commentContent, long timestamp) {
     this.nickname = nickname;
     this.commentContent = commentContent;
+    this.timestamp = timestamp;
   }
 
-  public Comment(String nickname, String commentContent, double sentimentScore) {
+  public Comment(String nickname, String commentContent, double sentimentScore, long timestamp) {
     this.nickname = nickname;
     this.commentContent = commentContent;
     this.sentimentScore = sentimentScore;
+    this.timestamp = timestamp;
   }
 
   public String getNickname() {
@@ -37,5 +40,9 @@ public class Comment {
 
   public String getCommentContent() {
     return this.commentContent;
+  }
+
+  public long getTimestamp() {
+    return this.timestamp;
   }
 }
