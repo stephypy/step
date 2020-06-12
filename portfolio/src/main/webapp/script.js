@@ -31,7 +31,11 @@ function addCommentsToDom() {
             createListElement(comment.nickname, 'nickname')
           );
           commentsSection.appendChild(
-            createListElement(comment.commentContent, 'comments', comment.sentimentScore)
+            createListElement(
+              comment.commentContent,
+              'comments',
+              comment.sentimentScore
+            )
           );
         });
       }
@@ -44,19 +48,17 @@ function createListElement(text, className, sentimentScore) {
   liElement.className = className;
   liElement.appendChild(liContent);
 
-  if(className == 'comments') {
+  if (className == 'comments') {
     const positiveEmoji = ' &#128516';
     const neutralEmoji = ' &#128172';
     const negativeEmoji = ' &#128556';
 
     const labelElement = document.createElement('label');
-    if(sentimentScore <= -0.6) {
+    if (sentimentScore <= -0.6) {
       labelElement.innerHTML = negativeEmoji;
-    }
-    else if(sentimentScore >= 0.6) {
+    } else if (sentimentScore >= 0.6) {
       labelElement.innerHTML = positiveEmoji;
-    }
-    else {
+    } else {
       labelElement.innerHTML = neutralEmoji;
     }
     liElement.appendChild(labelElement);
@@ -68,6 +70,7 @@ function createListElement(text, className, sentimentScore) {
 /* Open the modal box with comments */
 function openComments() {
   document.getElementById('whycs-modal').style.display = 'block';
+  addCommentsToDom();
 }
 
 /* Close modal when the X symbol is clicked or when user clicks outside the modal content */
