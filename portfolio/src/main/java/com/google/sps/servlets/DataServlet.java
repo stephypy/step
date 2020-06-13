@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. * */
+/** Servlet that returns user comments. * */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private List<Comment> commentsList = new ArrayList<>();

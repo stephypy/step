@@ -1,0 +1,33 @@
+@font-face {
+  font-family: BloggerSans;
+  src: url(/Fonts/BloggerSans.otf);
+}
+
+body {
+  position: absolute;
+  max-width: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #ecafae;
+  color: #f8f8ff;
+  font: 1vw BloggerSans;
+}
+
+#go-back,
+input[type='submit'] {
+  font-size: 1vw;
+  color: #f8f8ff;
+  background-color: #ecafae;
+  border: 0.2em solid #f8f8ff;
+  border-radius: 0.25em;
+  text-align: center;
+}
+
+#go-back:hover,
+input[type='submit']:hover,
+.comment-button:hover {
+  color: #e09291;
+  background-color: #f8f8ff;
+}

@@ -10,8 +10,23 @@
   </head>
 
   <body>
-    <h1>Are hotdogs a sandwich?</h1>
-    <div id="options"></div>
-    <div id="donut-chart"></div>
+      <h1>Are hotdogs a sandwich?</h1>
+      
+      <form action="/hotdog" method="POST">
+        <input type="radio" name="answer" value="yes">yes
+        <br />
+        <input type="radio" name="answer" value="no">no
+        <br />
+        <input type="submit" id="submit-answer">
+        <br />
+      </form>
+
+      <br />
+
+      <div id="pie-chart"></div>
+
+      <br /> 
+
+      <button id="go-back" onclick="goToHomePage()">go back</button>
   </body>
 </html>
