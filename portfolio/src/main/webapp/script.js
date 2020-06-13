@@ -99,5 +99,5 @@ function setInvisible(divName) {
 }
 
 function goToCharts() {
-  window.location.href = "/charts.html";
+  window.location.href = '/charts.html';
 }

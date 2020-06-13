@@ -14,29 +14,35 @@
 
 /* Go to homepage */
 function goToHomePage() {
-  window.location.href = "/";
+  window.location.href = '/';
 }
+const goBackButton = document.getElementById('go-back');
+goBackButton.addEventListener('click', goToHomePage);
 
-google.charts.load('current', {'packages':['corechart']});
+/*global google*/
+google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
 
 /** Creates a chart and adds it to the page. */
 function drawChart() {
-  fetch('/hotdog').then(response => response.json()).then((allVotes) => {
-    const data = new google.visualization.DataTable();
-    data.addColumn('string', 'answer');
-    data.addColumn('number', 'count');
-    Object.keys(allVotes).forEach((vote) => {
-      data.addRow([vote, allVotes[vote]]);
+  fetch('/hotdog')
+    .then((response) => response.json())
+    .then((allVotes) => {
+      const data = new google.visualization.DataTable();
+      data.addColumn('string', 'answer');
+      data.addColumn('number', 'count');
+      Object.keys(allVotes).forEach((vote) => {
+        data.addRow([vote, allVotes[vote]]);
+      });
+
+      const options = {
+        width: 500,
+        height: 400,
+      };
+
+      const chart = new google.visualization.PieChart(
+        document.getElementById('pie-chart')
+      );
+      chart.draw(data, options);
     });
-
-    const options = {
-      'width':500,
-      'height':400
-    };
-
-    const chart = new google.visualization.PieChart(
-      document.getElementById('pie-chart'));
-    chart.draw(data, options);
-  });
 }
