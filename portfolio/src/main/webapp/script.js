@@ -101,3 +101,5 @@ function setInvisible(divName) {
 function goToCharts() {
   window.location.href = '/charts.html';
 }
+const chartsLink = document.getElementById("charts-link");
+chartsLink.addEventListener('click', goToCharts);

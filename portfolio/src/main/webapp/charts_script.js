@@ -19,7 +19,7 @@ function goToHomePage() {
 const goBackButton = document.getElementById('go-back');
 goBackButton.addEventListener('click', goToHomePage);
 
-/*global google*/
+/* global google */
 google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
 
