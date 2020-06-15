@@ -47,11 +47,11 @@ public class DataServlet extends HttpServlet {
     List<Comment> commentsList = new ArrayList<>();
     for (Entity entity : results.asList(FetchOptions.Builder.withDefaults())) {
       String nickname = (String) entity.getProperty("nickname");
-      String commentContent = (String) entity.getProperty("commentContent");
+      String content = (String) entity.getProperty("commentContent");
       double sentimentScore = (double) entity.getProperty("sentimentScore");
       long timestamp = (long) entity.getProperty("timestamp");
 
-      Comment comment = new Comment(nickname, commentContent, sentimentScore, timestamp);
+      Comment comment = new Comment(nickname, content, sentimentScore, timestamp);
       commentsList.add(comment);
     }
 
@@ -66,7 +66,7 @@ public class DataServlet extends HttpServlet {
 
     Document doc =
         Document.newBuilder()
-            .setContent(comment.getCommentContent())
+            .setContent(comment.getContent())
             .setType(Document.Type.PLAIN_TEXT)
             .build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
@@ -76,7 +76,7 @@ public class DataServlet extends HttpServlet {
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("nickname", comment.getNickname());
-    commentEntity.setProperty("commentContent", comment.getCommentContent());
+    commentEntity.setProperty("commentContent", comment.getContent());
     commentEntity.setProperty("timestamp", comment.getTimestamp());
     commentEntity.setProperty("sentimentScore", score);
 
@@ -89,9 +89,9 @@ public class DataServlet extends HttpServlet {
 
   private Comment getComment(HttpServletRequest request) {
     String nickname = request.getParameter("nickname");
-    String commentContent = request.getParameter("comment");
+    String content = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
-    return new Comment(nickname, commentContent, timestamp);
+    return new Comment(nickname, content, timestamp);
   }
 
   private static String toJsonString(List<Comment> data) {

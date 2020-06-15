@@ -15,7 +15,8 @@
 /* Functions to be called when homepage gets loaded */
 function pageLoad() {
   fadeIn('home');
-  addCommentsToDom();
+  const whycs = document.getElementById('whycs-link');
+  whycs.addEventListener('click', addCommentsToDom);
   const openCommentsButton = document.getElementById('open-comments');
   openCommentsButton.addEventListener('click', openComments);
 }
@@ -29,41 +30,53 @@ function addCommentsToDom() {
         return;
       }
       comments.forEach((comment) => {
-        commentsSection.appendChild(createListElement(comment.nickname, 'nickname'));
-        commentsSection.appendChild(createListElement(comment.commentContent, 'comments',comment.sentimentScore));
+        commentsSection.appendChild(createUsernameElem(comment.nickname));
+        commentsSection.appendChild(createSentimentCommentElem(comment.content, comment.sentimentScore));
       });
   });
 }
 
-function createListElement(text, className, sentimentScore) {
-  const liElement = document.createElement('li');
-  const liContent = document.createTextNode(text);
-  liElement.className = className;
-  liElement.appendChild(liContent);
+/* Create the username element of the comment */
+function createUsernameElem(username) {
+  const dtElement = document.createElement('dt');
+  const dtContent = document.createTextNode(username);
 
-  if (className == 'comments') {
-    const positiveEmoji = ' &#128516';
-    const neutralEmoji = ' &#128172';
-    const negativeEmoji = ' &#128556';
+  dtElement.className = 'nickname';
+  dtElement.appendChild(dtContent);
 
-    const labelElement = document.createElement('label');
-    if (sentimentScore <= -0.6) {
-      labelElement.innerHTML = negativeEmoji;
-    } else if (sentimentScore >= 0.6) {
-      labelElement.innerHTML = positiveEmoji;
-    } else {
-      labelElement.innerHTML = neutralEmoji;
-    }
-    liElement.appendChild(labelElement);
-  }
-
-  return liElement;
+  return dtElement;
 }
+
+/* Create the content of the element of the comment 
+and parse  an emoji  appropiate to sentiment score */
+function createSentimentCommentElem(content, sentimentScore) {
+  const positiveEmoji = ' &#128516';
+  const neutralEmoji = ' &#128172';
+  const negativeEmoji = ' &#128556';
+
+  const ddElement = document.createElement('dd');
+  const ddSentiment = document.createElement('span');
+  const ddContent = document.createTextNode(content);
+
+  ddElement.className = 'comments';
+  ddElement.appendChild(ddContent);
+
+  if (sentimentScore <= -0.6) {
+    ddSentiment.innerHTML = negativeEmoji;
+  } else if (sentimentScore >= 0.6) {
+    ddSentiment.innerHTML = positiveEmoji;
+  } else {
+    ddSentiment.innerHTML = neutralEmoji;
+  }
+  
+  ddElement.appendChild(ddSentiment);
+  return ddElement;
+}
+
 
 /* Open the modal box with comments */
 function openComments() {
   document.getElementById('whycs-modal').style.display = 'block';
-  addCommentsToDom();
 }
 
 /* Close modal when the X symbol is clicked or when user clicks outside the modal content */
