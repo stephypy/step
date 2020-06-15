@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/* Functions to be called when homepage gets loaded */
 function pageLoad() {
   fadeIn('home');
   addCommentsToDom();
@@ -20,26 +21,18 @@ function pageLoad() {
 }
 window.onload = pageLoad;
 
+/* Fetch comments to be added to page */
 function addCommentsToDom() {
-  fetch('/data')
-    .then((response) => response.json())
-    .then((comments) => {
+  fetch('/data').then((response) => response.json()).then((comments) => {
       const commentsSection = document.getElementById('whycs-comments');
-      if (comments.error == null) {
-        comments.forEach((comment) => {
-          commentsSection.appendChild(
-            createListElement(comment.nickname, 'nickname')
-          );
-          commentsSection.appendChild(
-            createListElement(
-              comment.commentContent,
-              'comments',
-              comment.sentimentScore
-            )
-          );
-        });
+      if (comments.error) {
+        return;
       }
-    });
+      comments.forEach((comment) => {
+        commentsSection.appendChild(createListElement(comment.nickname, 'nickname'));
+        commentsSection.appendChild(createListElement(comment.commentContent, 'comments',comment.sentimentScore));
+      });
+  });
 }
 
 function createListElement(text, className, sentimentScore) {
