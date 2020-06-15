@@ -17,19 +17,19 @@ package com.google.sps.data;
 /** Class representing the template for a comment (nickname + comment content) */
 public class Comment {
   private String nickname;
-  private String commentContent;
+  private String content;
   private double sentimentScore;
   private long timestamp;
 
-  public Comment(String nickname, String commentContent, long timestamp) {
+  public Comment(String nickname, String content, long timestamp) {
     this.nickname = nickname;
-    this.commentContent = commentContent;
+    this.content = content;
     this.timestamp = timestamp;
   }
 
-  public Comment(String nickname, String commentContent, double sentimentScore, long timestamp) {
+  public Comment(String nickname, String content, double sentimentScore, long timestamp) {
     this.nickname = nickname;
-    this.commentContent = commentContent;
+    this.content = content;
     this.sentimentScore = sentimentScore;
     this.timestamp = timestamp;
   }
@@ -38,8 +38,8 @@ public class Comment {
     return this.nickname;
   }
 
-  public String getCommentContent() {
-    return this.commentContent;
+  public String getContent() {
+    return this.content;
   }
 
   public long getTimestamp() {
