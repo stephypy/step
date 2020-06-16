@@ -16,8 +16,13 @@
 function goToHomePage() {
   window.location.href = '/';
 }
-const goBackButton = document.getElementById('go-back');
-goBackButton.addEventListener('click', goToHomePage);
+
+/* Functions to be called when on load */
+function pageLoad() {
+  const goBackButton = document.getElementById('go-back');
+  goBackButton.addEventListener('click', goToHomePage);
+}
+window.onload = pageLoad;
 
 /* global google */
 google.charts.load('current', { packages: ['corechart'] });
@@ -29,10 +34,13 @@ function drawChart() {
     .then((response) => response.json())
     .then((allVotes) => {
       const data = new google.visualization.DataTable();
+      console.log(allVotes);
       data.addColumn('string', 'answer');
       data.addColumn('number', 'count');
       Object.keys(allVotes).forEach((vote) => {
-        data.addRow([vote, allVotes[vote]]);
+        if(vote != 'null') {
+          data.addRow([vote, allVotes[vote]]);
+        }
       });
 
       const options = {

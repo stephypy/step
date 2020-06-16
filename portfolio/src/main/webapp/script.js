@@ -17,6 +17,8 @@ function pageLoad() {
   addCommentsToDom();
   const openCommentsButton = document.getElementById('open-comments');
   openCommentsButton.addEventListener('click', openComments);
+  const chartsLink = document.getElementById("charts-link");
+  chartsLink.addEventListener('click', goToCharts);
 }
 window.onload = pageLoad;
 
@@ -101,5 +103,3 @@ function setInvisible(divName) {
 function goToCharts() {
   window.location.href = '/charts.html';
 }
-const chartsLink = document.getElementById("charts-link");
-chartsLink.addEventListener('click', goToCharts);
