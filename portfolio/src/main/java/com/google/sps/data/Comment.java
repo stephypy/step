@@ -21,12 +21,6 @@ public class Comment {
   private double sentimentScore;
   private long timestamp;
 
-  public Comment(String nickname, String content, long timestamp) {
-    this.nickname = nickname;
-    this.content = content;
-    this.timestamp = timestamp;
-  }
-
   public Comment(String nickname, String content, double sentimentScore, long timestamp) {
     this.nickname = nickname;
     this.content = content;

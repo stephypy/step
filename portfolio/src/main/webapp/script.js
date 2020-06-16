@@ -15,8 +15,7 @@
 /* Functions to be called when homepage gets loaded */
 function pageLoad() {
   fadeIn('home');
-  const whycs = document.getElementById('whycs-link');
-  whycs.addEventListener('click', addCommentsToDom);
+  addCommentsToDom();
   const openCommentsButton = document.getElementById('open-comments');
   openCommentsButton.addEventListener('click', openComments);
 }

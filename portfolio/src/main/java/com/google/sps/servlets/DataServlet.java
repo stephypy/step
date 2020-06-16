@@ -62,11 +62,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Comment comment = getComment(request);
-
+    
     Document doc =
         Document.newBuilder()
-            .setContent(comment.getContent())
+            .setContent(request.getParameter("comment"))
             .setType(Document.Type.PLAIN_TEXT)
             .build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
@@ -75,9 +74,9 @@ public class DataServlet extends HttpServlet {
     languageService.close();
 
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("nickname", comment.getNickname());
-    commentEntity.setProperty("commentContent", comment.getContent());
-    commentEntity.setProperty("timestamp", comment.getTimestamp());
+    commentEntity.setProperty("nickname", request.getParameter("nickname"));
+    commentEntity.setProperty("commentContent", request.getParameter("comment"));
+    commentEntity.setProperty("timestamp", System.currentTimeMillis());
     commentEntity.setProperty("sentimentScore", score);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -85,13 +84,6 @@ public class DataServlet extends HttpServlet {
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
-  }
-
-  private Comment getComment(HttpServletRequest request) {
-    String nickname = request.getParameter("nickname");
-    String content = request.getParameter("comment");
-    long timestamp = System.currentTimeMillis();
-    return new Comment(nickname, content, timestamp);
   }
 
   private static String toJsonString(List<Comment> data) {
