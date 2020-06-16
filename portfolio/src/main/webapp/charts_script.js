@@ -38,7 +38,7 @@ function drawChart() {
       data.addColumn('string', 'answer');
       data.addColumn('number', 'count');
       Object.keys(allVotes).forEach((vote) => {
-        if(vote != 'null') {
+        if (vote != 'null') {
           data.addRow([vote, allVotes[vote]]);
         }
       });

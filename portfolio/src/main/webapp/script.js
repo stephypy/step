@@ -17,7 +17,7 @@ function pageLoad() {
   addCommentsToDom();
   const openCommentsButton = document.getElementById('open-comments');
   openCommentsButton.addEventListener('click', openComments);
-  const chartsLink = document.getElementById("charts-link");
+  const chartsLink = document.getElementById('charts-link');
   chartsLink.addEventListener('click', goToCharts);
 }
 window.onload = pageLoad;

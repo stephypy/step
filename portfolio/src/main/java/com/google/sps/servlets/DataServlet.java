@@ -56,7 +56,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Comment comment = getComment(request);
-
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("nickname", comment.getNickname());
     commentEntity.setProperty("commentContent", comment.getCommentContent());
