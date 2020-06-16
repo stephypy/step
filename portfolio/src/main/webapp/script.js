@@ -23,16 +23,20 @@ window.onload = pageLoad;
 
 /* Fetch comments to be added to page */
 function addCommentsToDom() {
-  fetch('/data').then((response) => response.json()).then((comments) => {
+  fetch('/data')
+    .then((response) => response.json())
+    .then((comments) => {
       const commentsSection = document.getElementById('whycs-comments');
       if (comments.error) {
         return;
       }
       comments.forEach((comment) => {
         commentsSection.appendChild(createUsernameElem(comment.nickname));
-        commentsSection.appendChild(createSentimentCommentElem(comment.content, comment.sentimentScore));
+        commentsSection.appendChild(
+          createSentimentCommentElem(comment.content, comment.sentimentScore)
+        );
       });
-  });
+    });
 }
 
 /* Create the username element of the comment */
@@ -46,8 +50,7 @@ function createUsernameElem(username) {
   return dtElement;
 }
 
-/* Create the content of the element of the comment 
-and parse  an emoji  appropiate to sentiment score */
+/* Create the content of the element of the comment and parse  an emoji  appropiate to sentiment score */
 function createSentimentCommentElem(content, sentimentScore) {
   const positiveEmoji = ' &#128516';
   const neutralEmoji = ' &#128172';
@@ -67,11 +70,10 @@ function createSentimentCommentElem(content, sentimentScore) {
   } else {
     ddSentiment.innerHTML = neutralEmoji;
   }
-  
+
   ddElement.appendChild(ddSentiment);
   return ddElement;
 }
-
 
 /* Open the modal box with comments */
 function openComments() {
