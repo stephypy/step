@@ -18,6 +18,8 @@ function pageLoad() {
   addCommentsToDom();
   const openCommentsButton = document.getElementById('open-comments');
   openCommentsButton.addEventListener('click', openComments);
+  const chartsLink = document.getElementById('charts-link');
+  chartsLink.addEventListener('click', goToCharts);
 }
 window.onload = pageLoad;
 
@@ -125,4 +127,8 @@ function setInvisible(divName) {
   const elemDiv = document.getElementById(divName);
   elemDiv.style.opacity = 0;
   elemDiv.style.visibility = 'hidden';
+}
+
+function goToCharts() {
+  window.location.href = '/charts.html';
 }
