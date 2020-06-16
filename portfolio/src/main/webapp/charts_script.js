@@ -34,7 +34,6 @@ function drawChart() {
     .then((response) => response.json())
     .then((allVotes) => {
       const data = new google.visualization.DataTable();
-      console.log(allVotes);
       data.addColumn('string', 'answer');
       data.addColumn('number', 'count');
       Object.keys(allVotes).forEach((vote) => {
