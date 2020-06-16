@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/* Functions to be called when homepage gets loaded */
 function pageLoad() {
   fadeIn('home');
   addCommentsToDom();
@@ -20,30 +21,58 @@ function pageLoad() {
 }
 window.onload = pageLoad;
 
+/* Fetch comments to be added to page */
 function addCommentsToDom() {
   fetch('/data')
     .then((response) => response.json())
     .then((comments) => {
       const commentsSection = document.getElementById('whycs-comments');
-      if (comments.length > 0) {
-        comments.forEach((comment) => {
-          commentsSection.appendChild(
-            createListElement(comment.nickname, 'nickname')
-          );
-          commentsSection.appendChild(
-            createListElement(comment.commentContent, 'comments')
-          );
-        });
+      if (comments.error) {
+        return;
       }
+      comments.forEach((comment) => {
+        commentsSection.appendChild(createUsernameElem(comment.nickname));
+        commentsSection.appendChild(
+          createSentimentCommentElem(comment.content, comment.sentimentScore)
+        );
+      });
     });
 }
 
-function createListElement(text, className) {
-  const liElement = document.createElement('li');
-  const liContent = document.createTextNode(text);
-  liElement.className = className;
-  liElement.appendChild(liContent);
-  return liElement;
+/* Create the username element of the comment */
+function createUsernameElem(username) {
+  const dtElement = document.createElement('dt');
+  const dtContent = document.createTextNode(username);
+
+  dtElement.className = 'nickname';
+  dtElement.appendChild(dtContent);
+
+  return dtElement;
+}
+
+/* Create the content of the element of the comment and parse  an emoji  appropiate to sentiment score */
+function createSentimentCommentElem(content, sentimentScore) {
+  const positiveEmoji = ' &#128516';
+  const neutralEmoji = ' &#128172';
+  const negativeEmoji = ' &#128556';
+
+  const ddElement = document.createElement('dd');
+  const ddSentiment = document.createElement('span');
+  const ddContent = document.createTextNode(content);
+
+  ddElement.className = 'comments';
+  ddElement.appendChild(ddContent);
+
+  if (sentimentScore <= -0.6) {
+    ddSentiment.innerHTML = negativeEmoji;
+  } else if (sentimentScore >= 0.6) {
+    ddSentiment.innerHTML = positiveEmoji;
+  } else {
+    ddSentiment.innerHTML = neutralEmoji;
+  }
+
+  ddElement.appendChild(ddSentiment);
+  return ddElement;
 }
 
 /* Open the modal box with comments */

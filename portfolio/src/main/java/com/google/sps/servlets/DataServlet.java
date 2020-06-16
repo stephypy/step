@@ -17,9 +17,13 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -33,45 +37,53 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. * */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private List<Comment> commentsList = new ArrayList<>();
-  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    for (Entity entity : results.asIterable()) {
+    List<Comment> commentsList = new ArrayList<>();
+    for (Entity entity : results.asList(FetchOptions.Builder.withDefaults())) {
       String nickname = (String) entity.getProperty("nickname");
-      String commentContent = (String) entity.getProperty("commentContent");
+      String content = (String) entity.getProperty("commentContent");
+      double sentimentScore = (double) entity.getProperty("sentimentScore");
+      long timestamp = (long) entity.getProperty("timestamp");
 
-      Comment comment = new Comment(nickname, commentContent);
+      Comment comment = new Comment(nickname, content, sentimentScore, timestamp);
+      commentsList.add(comment);
     }
 
     String json = toJsonString(commentsList);
-    response.setContentType("application/json;");
+    response.setContentType("application/json; charset=utf-8");
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Comment comment = getComment(request);
+
+    Document doc =
+        Document.newBuilder()
+            .setContent(request.getParameter("comment"))
+            .setType(Document.Type.PLAIN_TEXT)
+            .build();
+    LanguageServiceClient languageService = LanguageServiceClient.create();
+    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+    double score = sentiment.getScore();
+    languageService.close();
 
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("nickname", comment.getNickname());
-    commentEntity.setProperty("commentContent", comment.getCommentContent());
+    commentEntity.setProperty("nickname", request.getParameter("nickname"));
+    commentEntity.setProperty("commentContent", request.getParameter("comment"));
+    commentEntity.setProperty("timestamp", System.currentTimeMillis());
+    commentEntity.setProperty("sentimentScore", score);
 
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-    commentsList.add(comment);
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
-  }
-
-  private Comment getComment(HttpServletRequest request) {
-    String nickname = request.getParameter("nickname");
-    String commentContent = request.getParameter("comment");
-    return new Comment(nickname, commentContent);
   }
 
   private static String toJsonString(List<Comment> data) {
