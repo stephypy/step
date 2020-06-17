@@ -15,9 +15,57 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ArrayList;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
+
+    // Return no available times when the time request exceeds 24hrs or has no valid minimum
+    if(request.getDuration() > TimeRange.WHOLE_DAY.duration() || request.getDuration() <= 0) {
+      return availableTimes;
+    }
+
+    // Get events where the requested people are busy 
+    List<Event> busyTimes = new ArrayList<>();
+    for(Event evt: events) {
+      for(String attendee: request.getAttendees()) {
+        if(evt.getAttendees().contains(attendee)) {
+          busyTimes.add(evt);
+          break;
+        }
+      }
+    }
+
+    // Sort events by time
+    Comparator<Event> compareByStartTime = (Event evt1, Event evt2) -> TimeRange.ORDER_BY_START.compare(evt1.getWhen(), evt2.getWhen());
+    Collections.sort(busyTimes, compareByStartTime);
+
+    int possibleStart = TimeRange.START_OF_DAY;
+
+    for(Event curr:busyTimes) {
+      // Check if there's available time before busy meetings
+      if(possibleStart + request.getDuration() <= curr.getWhen().start()) {
+        availableTimes.add(TimeRange.fromStartEnd(possibleStart, curr.getWhen().start(), false));
+      
+        // Update the possible start to be the end of the current busy event
+        possibleStart = curr.getWhen().end();
+  
+      } 
+      // Make sure the possible start is not in the middle of the current event
+      else if(possibleStart < curr.getWhen().end()) {
+        possibleStart = curr.getWhen().end();
+      }
+    }
+
+    // Check end of day
+    if(TimeRange.END_OF_DAY - possibleStart >= request.getDuration()) {
+      availableTimes.add(TimeRange.fromStartEnd(possibleStart, TimeRange.END_OF_DAY, true));
+    }
+
+    return availableTimes;
   }
 }
