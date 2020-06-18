@@ -320,7 +320,20 @@ public final class FindMeetingQueryTest {
   /* Test 4 for STEP */
   @Test
   public void noMandatoryWithGaps() {
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
+            Arrays.asList(PERSON_A)),        
+        new Event("Event 2", TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_B)));
 
+    MeetingRequest request = new MeetingRequest(Arrays.asList(), DURATION_30_MINUTES);
+    request.addOptionalAttendee(PERSON_A);
+    request.addOptionalAttendee(PERSON_B);
+
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected = Arrays.asList(TimeRange.fromStartDuration(TimeRange.START_OF_DAY, TIME_0900AM), TimeRange.fromStartDuration(TIME_0930AM, DURATION_90_MINUTES));
+
+    Assert.assertEquals(expected, actual);
   }
 
   /* Test 5 for STEP */

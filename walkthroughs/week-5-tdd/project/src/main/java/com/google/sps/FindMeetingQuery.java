@@ -29,10 +29,18 @@ public final class FindMeetingQuery {
       return availableTimes;
     }
 
+    // Get the required attendees
+    Collection<String> attendees = request.getAttendees();
+
+    // If there's no mandatory attendees, get the optional attendees
+    if(request.getAttendees().isEmpty()) {
+      attendees = request.getOptionalAttendees();
+    }
+
     // Get events where the requested people are busy 
     List<Event> busyTimes = new ArrayList<>();
     for(Event evt: events) {
-      for(String attendee: request.getAttendees()) {
+      for(String attendee: attendees) {
         if(evt.getAttendees().contains(attendee)) {
           busyTimes.add(evt);
           break;
