@@ -320,7 +320,12 @@ public final class FindMeetingQueryTest {
   /* Test 4 for STEP */
   @Test
   public void noMandatoryWithGaps() {
-    // description
+    // Only have optional attendees with several gaps in their schedules and return those options 
+    //
+    // Events  :    |--A--|   |----B----|
+    // Day     : |----------------------|
+    // Options : |--|     |---|
+
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
@@ -341,7 +346,12 @@ public final class FindMeetingQueryTest {
   /* Test 5 for STEP */
   @Test
   public void noMandatoryNoGaps() {
-    // description
+    // Only have optional attendees with no gaps in their schedules and return empty list
+    //
+    // Events  : |--A--|-------B--------|
+    // Day     : |----------------------|
+    // Options : 
+
 
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_1000AM, false),
