@@ -320,6 +320,8 @@ public final class FindMeetingQueryTest {
   /* Test 4 for STEP */
   @Test
   public void noMandatoryWithGaps() {
+    // description
+
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),        
