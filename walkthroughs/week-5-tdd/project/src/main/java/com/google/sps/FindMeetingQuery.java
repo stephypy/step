@@ -14,24 +14,25 @@
 
 package com.google.sps;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ArrayList;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
 
     // Return no available times when the time request exceeds 24hrs or has no valid minimum
-    if(request.getDuration() > TimeRange.WHOLE_DAY.duration() || request.getDuration() <= 0) {
+    if (request.getDuration() > TimeRange.WHOLE_DAY.duration() || request.getDuration() <= 0) {
       return availableTimes;
     }
 
     // If there are not any attendees, return all time to be available
-    if(request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty()) {
-      availableTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
+    if (request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty()) {
+      availableTimes.add(
+          TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
       return availableTimes;
     }
 
@@ -39,7 +40,7 @@ public final class FindMeetingQuery {
     Collection<String> attendees = request.getAttendees();
 
     // If there are no mandatory attendees, consider the optional attendees instead
-    if(attendees.isEmpty()) {
+    if (attendees.isEmpty()) {
       attendees = request.getOptionalAttendees();
     }
 
@@ -51,69 +52,71 @@ public final class FindMeetingQuery {
     availableTimes = getAvailableTimes(busyEvents, request.getDuration());
 
     // Consider optional attendees if mandatory attendees were included initially
-    if(!request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
+    if (!request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
       // Sort optional and mandatory attendees busy events
       Collection<String> optionalAttendees = request.getOptionalAttendees();
-      List<Event> busyEventsOptional = getBusyEvents(events, optionalAttendees); 
+      List<Event> busyEventsOptional = getBusyEvents(events, optionalAttendees);
       busyEvents.addAll(busyEventsOptional);
       busyEvents = sortEvents(busyEvents);
-      
+
       // Get the available times considering the optional attendees
-      Collection<TimeRange> availableTimesWithOptional = getAvailableTimes(busyEvents, request.getDuration());
+      Collection<TimeRange> availableTimesWithOptional =
+          getAvailableTimes(busyEvents, request.getDuration());
 
       // If there are available times with optional attendees, return them
-      if(!availableTimesWithOptional.isEmpty()) {
+      if (!availableTimesWithOptional.isEmpty()) {
         return availableTimesWithOptional;
       }
-
-    }    
+    }
     return availableTimes;
   }
 
   private List<Event> getBusyEvents(Collection<Event> events, Collection<String> attendees) {
     List<Event> busyEvents = new ArrayList<>();
-      for(Event evt: events) {
-        for(String attendee: attendees) {
-          if(evt.getAttendees().contains(attendee)) {
-            busyEvents.add(evt);
-            break;
-          }
+    for (Event evt : events) {
+      for (String attendee : attendees) {
+        if (evt.getAttendees().contains(attendee)) {
+          busyEvents.add(evt);
+          break;
         }
       }
+    }
     return busyEvents;
   }
 
   private List<Event> sortEvents(List<Event> events) {
-    Comparator<Event> compareByStartTime = (Event evt1, Event evt2) -> TimeRange.ORDER_BY_START.compare(evt1.getWhen(), evt2.getWhen());
+    Comparator<Event> compareByStartTime =
+        (Event evt1, Event evt2) ->
+            TimeRange.ORDER_BY_START.compare(evt1.getWhen(), evt2.getWhen());
     Collections.sort(events, compareByStartTime);
     return events;
   }
 
   private Collection<TimeRange> getAvailableTimes(List<Event> unavailableList, long duration) {
-    if(unavailableList.isEmpty()) {
+    if (unavailableList.isEmpty()) {
       Collections.emptySet();
     }
 
     Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
     int possibleStart = TimeRange.START_OF_DAY;
-    
-    for(Event curr:unavailableList) {
+
+    for (Event curr : unavailableList) {
       // Check if there's available time before busy meetings
-      if(possibleStart + duration <= curr.getWhen().start()) {
+      if (possibleStart + duration <= curr.getWhen().start()) {
         availableTimes.add(TimeRange.fromStartEnd(possibleStart, curr.getWhen().start(), false));
-        
-      // Update the possible start to be the end of the current busy event
-      possibleStart = curr.getWhen().end();
-    
-      } 
+
+        // Update the possible start to be the end of the current busy event
+        possibleStart = curr.getWhen().end();
+
+      }
       // Make sure the possible start is not in the middle of the current event
-      else if(possibleStart < curr.getWhen().end()) {
+      else if (possibleStart < curr.getWhen().end()) {
         possibleStart = curr.getWhen().end();
       }
     }
 
     // Check end of day
-    if(TimeRange.END_OF_DAY - possibleStart >= duration) {
+    if (TimeRange.END_OF_DAY - possibleStart >= duration) {
       availableTimes.add(TimeRange.fromStartEnd(possibleStart, TimeRange.END_OF_DAY, true));
     }
 

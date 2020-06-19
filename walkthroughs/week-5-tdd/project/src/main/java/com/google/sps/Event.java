@@ -53,23 +53,17 @@ public final class Event {
     this.attendees.addAll(attendees);
   }
 
-  /**
-   * Returns the human-readable name for this event.
-   */
+  /** Returns the human-readable name for this event. */
   public String getTitle() {
     return title;
   }
 
-  /**
-   * Returns the {@code TimeRange} for when this event occurs.
-   */
+  /** Returns the {@code TimeRange} for when this event occurs. */
   public TimeRange getWhen() {
     return when;
   }
 
-  /**
-   * Returns a read-only set of required attendees for this event.
-   */
+  /** Returns a read-only set of required attendees for this event. */
   public Set<String> getAttendees() {
     // Return the attendees as an unmodifiable set so that the caller can't change our
     // internal data.

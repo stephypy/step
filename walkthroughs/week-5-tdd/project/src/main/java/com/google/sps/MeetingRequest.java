@@ -14,8 +14,6 @@
 
 package com.google.sps;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,38 +33,30 @@ public final class MeetingRequest {
     this.attendees.addAll(attendees);
   }
 
-  /**
-   * Returns a read-only copy of the people who are required to attend this meeting.
-   */
+  /** Returns a read-only copy of the people who are required to attend this meeting. */
   public Collection<String> getAttendees() {
-    if(attendees == null) {
+    if (attendees == null) {
       return Collections.emptySet();
     }
     return Collections.unmodifiableCollection(attendees);
   }
 
-  /**
-   * Returns a read-only copy of the people who are optional to attend this meeting.
-   */
+  /** Returns a read-only copy of the people who are optional to attend this meeting. */
   public Collection<String> getOptionalAttendees() {
-    if(optional_attendees == null) {
+    if (optional_attendees == null) {
       return Collections.emptySet();
     }
     return Collections.unmodifiableCollection(optional_attendees);
   }
 
-  /**
-   * Adds one optional attendee for the meeting.
-   */
+  /** Adds one optional attendee for the meeting. */
   public void addOptionalAttendee(String attendee) {
     if (!attendees.contains(attendee)) {
       optional_attendees.add(attendee);
     }
   }
 
-  /**
-   * Returns the duration of the meeting in minutes.
-   */
+  /** Returns the duration of the meeting in minutes. */
   public long getDuration() {
     return duration;
   }
