@@ -22,18 +22,12 @@ import java.util.ArrayList;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-
     Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
 
     // Return no available times when the time request exceeds 24hrs or has no valid minimum
     if(request.getDuration() > TimeRange.WHOLE_DAY.duration() || request.getDuration() <= 0) {
       return availableTimes;
     }
-
-    // 1. Get required attendees busy times
-    // 2. Get optional busy times
-    // 3. Get available times
-    // 4. If available 0, get available times with no optional
 
     // If there are not any attendees, return all time to be available
     if(request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty()) {
@@ -56,22 +50,23 @@ public final class FindMeetingQuery {
     // Get available times
     availableTimes = getAvailableTimes(busyEvents, request.getDuration());
 
-    // Consider optional attendees if mandatory attendees were included
+    // Consider optional attendees if mandatory attendees were included initially
     if(!request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
-      
+      // Sort optional and mandatory attendees busy events
       Collection<String> optionalAttendees = request.getOptionalAttendees();
       List<Event> busyEventsOptional = getBusyEvents(events, optionalAttendees); 
       busyEvents.addAll(busyEventsOptional);
       busyEvents = sortEvents(busyEvents);
       
+      // Get the available times considering the optional attendees
       Collection<TimeRange> availableTimesWithOptional = getAvailableTimes(busyEvents, request.getDuration());
 
+      // If there are available times with optional attendees, return them
       if(!availableTimesWithOptional.isEmpty()) {
         return availableTimesWithOptional;
       }
 
     }    
-    
     return availableTimes;
   }
 
