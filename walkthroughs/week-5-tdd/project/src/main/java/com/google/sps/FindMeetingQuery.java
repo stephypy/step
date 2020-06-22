@@ -71,6 +71,7 @@ public final class FindMeetingQuery {
     return availableTimes;
   }
 
+  /* Return the events in which the requested attendees are unavailable */
   private List<Event> getBusyEvents(Collection<Event> events, Collection<String> attendees) {
     List<Event> busyEvents = new ArrayList<>();
     for (Event evt : events) {
@@ -84,6 +85,7 @@ public final class FindMeetingQuery {
     return busyEvents;
   }
 
+  /* Sort events by earliest time */
   private List<Event> sortEvents(List<Event> events) {
     Comparator<Event> compareByStartTime =
         (Event evt1, Event evt2) ->
@@ -92,11 +94,9 @@ public final class FindMeetingQuery {
     return events;
   }
 
-  private Collection<TimeRange> getAvailableTimes(List<Event> unavailableList, long duration) {
-    if (unavailableList.isEmpty()) {
-      Collections.emptySet();
-    }
 
+  /* Return the timeranges in which the requested duration for a meeting can be requested */
+  private Collection<TimeRange> getAvailableTimes(List<Event> unavailableList, long duration) {
     Collection<TimeRange> availableTimes = new ArrayList<TimeRange>();
     int possibleStart = TimeRange.START_OF_DAY;
 
